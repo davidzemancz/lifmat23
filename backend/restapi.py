@@ -104,9 +104,10 @@ def post_message():
     message = request.json
     messages.append(message)
 
-    if message.get('file') and messages.get('pastId'):
-        file = messages['file']
-        pastId = messages['pastId']
+    if 'file' in message:
+        file = message['file']
+        pastId = int(message['pastId'])
+        print(file, pastId)
         answer = ask_detailed(file, pastId)
         messages.append(answer)
 
@@ -122,14 +123,16 @@ def get_mock_answer():
     return {
             'text': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Aenean fermentum risus id tortor. Integer lacinia. Nullam rhoncus aliquam metus. Integer imperdiet lectus quis justo. ',
             'isOutgoing': False,
+            'pastId': 1,
             'refs':[
                 {
                     'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0094156',
-                    'info': "kapitoly 4,5"
+                    'info': "kapitoly 4,5",
+                    
                 },
                 {
                     'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0255111',
-                    'info': "kapitoly 6"
+                    'info': "kapitoly 6",
                 }
             ],
             'options': [{
