@@ -49,16 +49,19 @@ def ask(message):
             context = ""
             if len(messages ) > 1: context = [x['text'] for x in messages[-2:]]
             answer = get_answer(message, pdfs_list, chaps, context)
+
+            return {
+                'isOutgoing': False,
+                'text': answer,
+                'refs': [{ 'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{drug[0]}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'} for drug in drugs],
+                'chaps': chaps,
+                'pdf_list': pdfs_list
+            }
         else:
             return {
-            'isOutgoing': False,
-            'text': "K vašemu dotazu nebyly nalezeny žádné informace."
-        }
-    return {
-        'isOutgoing': False,
-        'text': answer,
-        'refs': [{ 'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{drug[0]}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'} for drug in drugs]
-    }
+                'isOutgoing': False,
+                'text': "K vašemu dotazu nebyly nalezeny žádné informace."
+            }
 
 def ask_detailed(file, pastId):
     prev_message = messages[pastId]
@@ -70,7 +73,9 @@ def ask_detailed(file, pastId):
         return {
             'isOutgoing': False,
             'text': answer_text,
-            'refs': [ {'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{file}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'}]
+            'refs': [ {'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{file}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'}],
+            'chaps': chaps,
+            'pdf_list': pdfs_list
         }
     else:
         return {
