@@ -1,25 +1,39 @@
 from flask import Flask, request
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
+messages = []
+
+def get_answer():
+    return {
+        'isOutgoing': False,
+        'text': 'nema slov'
+    }
+
+@app.route('/delete-messages')
+def delete_messages():
+    global messages
+    messages = []
+    return {}
 
 @app.route('/messages')
 def get_messages():
+    global messages
+
     return {
-        'messages': [
-            {
-                'id': 1,
-                'isOutgoing': True,
-                'text': 'Kolik paralenu si muzu dat'
-            },
-            {
-                'id': 2,
-                'isOutgoing': False,
-                'text': 'Zadny ty magore'
-            }
-        ]
+        'messages': messages
     }
 
 @app.route('/post-message', methods=['POST'])
 def post_message():
-    data = request.json
-    return data
+    global messages
+    
+    message = request.json
+    messages.append(message)
+    
+    answer = get_answer()
+    messages.append(answer)
+
+    return {}
+
