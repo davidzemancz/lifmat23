@@ -35,10 +35,10 @@ def ask(message):
     }
 
 # Testy
-# print(ask('Jaká je doporučená dávka paralenu pro dospělého?'))
-#get_answer('Na jaké indikace je paralen určen?')
-#get_answer('Jaké má ewofex nežádoucí účinky?')
-# get_answer('Jaké jsou kontradikce má LUSIENNE?')
+#print(ask('Jaká je doporučená dávka paralenu pro dospělého?'))
+#print(ask('Na jaké indikace je paralen určen?'))
+#print(ask('Jaké má ewofex nežádoucí účinky?'))
+print(ask('Jaké jsou kontradikce má LUSIENNE?'))
 
 @app.route('/delete-messages')
 def delete_messages():
