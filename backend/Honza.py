@@ -12,7 +12,7 @@ def get_answer(message, pdfs, chapters, context):
     messages=[
         {
           "role": "system", 
-          "content": "Máš k dispozici následující kontext." + context
+          "content": "Máš k dispozici následující kontext." + ",".join(context)
         },
         {
           "role": "user",
