@@ -11,6 +11,12 @@ def get_answer():
         'text': 'nema slov'
     }
 
+@app.route('/delete-messages')
+def delete_messages():
+    global messages
+    messages = []
+    return {}
+
 @app.route('/messages')
 def get_messages():
     global messages
