@@ -1,5 +1,4 @@
 from pypdf import PdfReader
-from tabula import read_pdf
 
 def read_chapter(chap_num, pdf_name):
     reader = PdfReader(pdf_name)
@@ -22,15 +21,6 @@ def read_chapter(chap_num, pdf_name):
                 chap_content += line + "\n"
                 print("##" + repr(t))
     return chap_content
-
-
-def read_tables(pdf_name):
-    # This might take a little while depending on the size and complexity of your PDF 
-    tables = read_pdf(pdf_name, pages="all", multiple_tables=True)  # 'tables' is a list of DataFrame objects representing tables from the PDF 
-    for i, table in enumerate(tables):     
-        print(f"Table {i+1}:")   
-        print(table)     
-        print("\n")
 
 
 
