@@ -2,7 +2,7 @@ import os
 import openai
 import PDFreader
 
-openai.api_key = "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"
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 kapitoly = [
@@ -28,7 +28,7 @@ kapitoly = [
     "DATUM REVIZE TEXTU"
 ]
 
-def respond(question):
+def respond35(question):
   response = openai.Completion.create(
     model="gpt-3.5-turbo-instruct",
     # model="gpt-4-0613",
@@ -37,21 +37,25 @@ def respond(question):
   )
 
   return response['choices'][0]['text']
-  print(response['choices'][0]['text'])
+
+def respond4(question):
+  response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": question}
+    ])
+
+  return (response['choices'][0]['message']['content'])
 
 prompt=PDFreader.read_chapter(2, "test_pdfs/warfarin.pdf")
-# question="Jaká gramáž warfarinu je zmíněná v následujícím textu?"
 
 chapters = []
 doctor_prompt="Jaká je smrtelná dávka warfarinu."
 
 for c in range(len(kapitoly)):
-  question="Je " + kapitoly[c] + " Relevantni na dotaz: " + doctor_prompt + " ? Pouze ANO nebo NE"
-  res = respond(question)
-  if (res == "ANO"):
+  question="Je " + kapitoly[c] + " Relevantni pro: " + doctor_prompt
+  if ("ANO" in respond4(question).upper()):
     chapters += [c]
-  else:
-    print(res)
-
 
 print(chapters)
+
