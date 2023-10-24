@@ -52,7 +52,7 @@ def create_leky():
     table_name = 'leky'
     print(table_name)
     cur.execute(f'DROP VIEW IF EXISTS {table_name}')
-    query = f'CREATE VIEW {table_name} AS SELECT lp.KOD_SUKL, lp.NAZEV, lp.SILA, nd.SPC FROM dlp_lecivepripravky lp, dlp_nazvydokumentu nd WHERE lp.KOD_SUKL = nd.KOD_SUKL;'
+    query = f'CREATE VIEW {table_name} AS SELECT lp.KOD_SUKL, (lp.NAZEV || " " || lp.SILA) AS NAZEV, nd.SPC FROM dlp_lecivepripravky lp, dlp_nazvydokumentu nd WHERE lp.KOD_SUKL = nd.KOD_SUKL;'
     cur.execute(query)
     con.commit()
 
