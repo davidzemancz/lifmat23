@@ -3,6 +3,8 @@ from pypdf import PdfReader
 
 
 def read_chapter(chap_num, pdf_name):
+    print(chap_num)
+    print(pdf_name)
     pdf_path = f'../../lifmat23_data/spc/{pdf_name}'
     reader = PdfReader(pdf_path)
     number_of_pages = len(reader.pages)
@@ -29,7 +31,7 @@ kapitoly = [
     "2.KVALITATIVNÍAKVANTITATIVNÍSLOŽENÍ",                                          #1
     "3.LÉKOVÁFORMA",                                                                #2                                         
     "4.1Terapeutickéindikace",
-    "4.2 Dávkováníazpůsob podání",
+    "4.2Dávkováníazpůsobpodání",
     "4.3Kontraindikace",
     "4.4Zvláštníupozorněníaopatřenípropoužití",
     "4.5Interakcesjinýmiléčivýmipřípravkyajinéformyinterakce",

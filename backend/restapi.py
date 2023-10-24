@@ -3,6 +3,7 @@ from flask_cors import CORS
 from QueryCreator import create_query
 import sqlite3
 import APIPrompt
+import PDFreader
 app = Flask(__name__)
 CORS(app)
 
@@ -16,11 +17,18 @@ def get_pdfs(query):
     return [row[0] for row in rows if row[0] != '']
 
 def get_chapters(message):
-    prompt = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Vrať výsledek jako python list indexů. Oblasti: " + APIPrompt.kapitoly_str + "Dotaz: " + message
-    return APIPrompt.respond4(prompt)
+    prompt = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Vrať výsledek jako indexy odělené čárkou. Oblasti: " + APIPrompt.kapitoly_str + "Dotaz: " + message
+    res = APIPrompt.respond4(prompt)
+    return  list(map(int,res.split(",")))
 
 def ask(message, pdfs, chapters):
-    return ''
+    text = ""
+    for c in chapters:
+        text += PDFreader.read_chapter(c,pdfs[0])
+    
+    print(text)
+    return text
+    return read_chapter()
 
 def get_answer(message):
     # Vygenerovat query do DN pro vraceni PDF
@@ -32,7 +40,7 @@ def get_answer(message):
     pdfs = get_pdfs(query)
     chaps = get_chapters(message)
     print(chaps)
-    # answer = ask(message, pdfs, chaps)
+    answer = ask(message, pdfs, chaps)
     
     return {
         'isOutgoing': False,

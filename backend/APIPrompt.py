@@ -45,8 +45,6 @@ kapitoly = [
     "DATUM REVIZE TEXTU"
 ]
 
-prompt = PDFreader.read_chapter(2, "test_pdfs/warfarin.pdf")
-
 chapters = []
 doctor_prompt = "Jaká je smrtelná dávka warfarinu."
 doctor_prompt = "Jake jsou vedlejsi ucinky warfarinu pri brani s paralenem?"
