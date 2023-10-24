@@ -38,7 +38,7 @@ def get_drugs(query):
     rows = cur.fetchall()
     pdfs = {}
     for row in rows:
-        if row[1] != '':
+        if len(row) > 2 and row[2] != '':
             pdfs[row[2]] = (row[0], row[1])
     return [(pdfs[pdf][1], pdf, pdfs[pdf][0]) for pdf in pdfs]
 
