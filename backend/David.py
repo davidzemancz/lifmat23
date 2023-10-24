@@ -10,11 +10,19 @@ def create_query(message):
         messages=[
             {
                 "role": "user", 
-                "content": "Mám SQL VIEW 'leky' a v něm sloupce KOD_SUKL a NAZEV a SPC."
+                "content": "Mám SQL VIEW 'leky' a v něm sloupce KOD_SUKL, NAZEV, SPC, SILA."
             },
              {
                 "role": "user", 
-                "content": f'Vytvoř query pro vrácení sloupce SPC pouze podle části názvu léku psaného velkými písmeny pro následující dotaz: {message}'
+                "content": f'Vytvoř query pro vrácení sloupce SPC podle sloucpů NAZEV a SILA.'
+            },
+            {
+                "role": "user", 
+                "content": f'Pro oba sloupce použij operátor LIKE s % a velká písmena.'
+            },
+            {
+                "role": "user", 
+                "content": f'Dotaz zní takto: {message}'
             },
             {
                 "role": "user", 
@@ -33,9 +41,9 @@ def get_pdfs(query):
 def test():
     # question = 'Jaký je eliminační poločas warfarinu?'
     # question = 'Je pro člověka s horečkou lepší paralen grip nebo warfarin?'
-    # question = 'Jaká je doporučená dávka léku paralen grip?'
+    question = 'Jaká je doporučená dávka léku paralen grip 25mg?'
     # question = 'Lze použít omeprazol při diabetes?'
-    question = 'Je 1000mg léku atomoxetin actavis smrtelná dávka?'
+    # question = 'Je 1000mg léku atomoxetin actavis smrtelná dávka?'
 
     query = create_query(question)
     print(query)
@@ -43,4 +51,4 @@ def test():
     print(pdfs)
     print(len(pdfs))
 
-# test()
+test()
