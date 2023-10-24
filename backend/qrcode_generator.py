@@ -1,12 +1,18 @@
 import qrcode
+import sqlite3
 
 sukl_path = "https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/"
 qrcode_path = {}
 
 
-for lek in db:
+con = sqlite3.connect("data.db") 
+cur = con.cursor()
+cur.execute('SELECT KOD_SUKL from leky')
+rows = cur.fetchall()
+for row in rows:
+    lek = row[0]
     # Create a QR code object with a larger size and higher error correction
-    qr = qrcode.QRCode(version=3, box_size=20, border=10, error_correction=qrcode.constants.ERROR_CORRECT_H)
+    qr = qrcode.QRCode(version=3, box_size=25, border=10, error_correction=qrcode.constants.ERROR_CORRECT_H)
 
     # Define the data to be encoded in the QR code
     data = f'{sukl_path}{lek}'
