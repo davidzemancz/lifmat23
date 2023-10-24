@@ -34,7 +34,8 @@ def ask(message):
         return {
             'isOutgoing': False,
             'text': 'Vyberte prosím lék, který vás zajímá.',
-            'options':[{'name': drug[2], 'file': drug[1] } for drug in drugs]
+            'options':[{'name': drug[2], 'file': drug[1] } for drug in drugs],
+            'pastId':len(messages) - 1
         }
     elif len(drugs) == 0:  
         return {
@@ -43,21 +44,39 @@ def ask(message):
     }
     else: 
         chaps = get_chapters(message)
-        
-    if len(chaps) > 0: 
-        pdfs_list = list(map(lambda x: x[1], drugs))
-        answer = get_answer(message, pdfs_list, chaps)
-    else:
-        return {
-        'isOutgoing': False,
-        'text': "Nenalezeny žádné kapitoly."
-    }
-
+        if len(chaps) > 0: 
+            pdfs_list = list(map(lambda x: x[1], drugs))
+            answer = get_answer(message, pdfs_list, chaps)
+        else:
+            return {
+            'isOutgoing': False,
+            'text': "K vašemu dotazu nebyly nalezeny žádné informace."
+        }
     return {
         'isOutgoing': False,
         'text': answer,
         'refs': [{ 'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{drug[0]}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'} for drug in drugs]
     }
+
+def ask_detailed(file, pastId):
+    prev_message = messages[pastId]
+    
+    chaps = get_chapters(prev_message['text'])
+    if len(chaps) > 0:
+        pdfs_list = [file]
+        answer_text = get_answer(prev_message['text'], pdfs_list, chaps)
+        answer = {
+            'isOutgoing': False,
+            'text': answer_text,
+            'refs': [ {'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{file}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'}]
+        }
+        messages.append(answer)
+    else:
+        messages.append({
+            'isOutgoing': False,
+            'text': "Nenalezeny žádné kapitoly."
+        })
+
 
 # Testy
 # print(ask('Na jaké indikace je určen MAGNEROT 500MG?'))
@@ -86,30 +105,15 @@ def post_message():
     message = request.json
     messages.append(message)
 
-    if message.get('file'):
-        prev_message = messages[-3]
-        file = message['file']
-       
-        chaps = get_chapters(prev_message['text'])
-        if len(chaps) > 0:
-            pdfs_list = [file]
-            answer_text = get_answer(prev_message['text'], pdfs_list, chaps)
-            answer = {
-                'isOutgoing': False,
-                'text': answer_text,
-                'refs': [ {'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{file}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'}]
-            }
-            messages.append(answer)
-        else:
-            messages.append({
-                'isOutgoing': False,
-                'text': "Nenalezeny žádné kapitoly."
-            })
+    if message.get('file') and messages.get('pastId'):
+        file = messages['file']
+        pastId = messages['pastId']
+        answer = ask_detailed(file, pastId)
 
     else:
-        time.sleep(3)
-        answer = get_mock_answer()
-        # answer = ask(message['text'])
+        # time.sleep(3)
+        # answer = get_mock_answer()
+        answer = ask(message['text'])
         messages.append(answer)
 
     return {}
