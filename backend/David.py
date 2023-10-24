@@ -14,7 +14,7 @@ def create_query(message):
             },
              {
                 "role": "user", 
-                "content": f'Vytvoř query pro vrácení sloupce SPC podle názvu léku psaného velkými písmeny pro následující dotaz: {question}'
+                "content": f'Vytvoř query pro vrácení sloupce SPC podle názvu léku psaného velkými písmeny pro následující dotaz: {message}'
             },
             {
                 "role": "user", 
