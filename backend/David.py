@@ -14,7 +14,7 @@ def create_query(message):
             },
              {
                 "role": "user", 
-                "content": f'Vytvoř query pro vrácení sloupce SPC podle části názvu léku psaného velkými písmeny pro následující dotaz: {message}'
+                "content": f'Vytvoř query pro vrácení sloupce SPC pouze podle části názvu léku psaného velkými písmeny pro následující dotaz: {message}'
             },
             {
                 "role": "user", 
@@ -31,14 +31,16 @@ def get_pdfs(query):
     return list(dict.fromkeys([row[0] for row in rows if row[0] != '']))
 
 def test():
-    question = 'Jaký je eliminační poločas warfarinu?'
-    question = 'Je pro člověka s horečkou lepší paralen nebo warfarin?'
-    question = 'Jaká je doporučená dávka paralenu?'
-    question = 'Lze použít omeprazol při diabetes?'
+    # question = 'Jaký je eliminační poločas warfarinu?'
+    # question = 'Je pro člověka s horečkou lepší paralen grip nebo warfarin?'
+    # question = 'Jaká je doporučená dávka léku paralen grip?'
+    # question = 'Lze použít omeprazol při diabetes?'
+    question = 'Je 1000mg léku atomoxetin actavis smrtelná dávka?'
 
     query = create_query(question)
     print(query)
     pdfs = get_pdfs(query)
     print(pdfs)
+    print(len(pdfs))
 
 # test()
