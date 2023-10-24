@@ -44,21 +44,20 @@ def respond4(question):
   response = openai.ChatCompletion.create(
     model="gpt-4",
     messages=[
-        {"role": "system", "content": "Co je to paralen?"}
+        {"role": "system", "content": question}
     ])
 
+  return (response['choices'][0]['message']['content'])
+
 prompt=PDFreader.read_chapter(2, "test_pdfs/warfarin.pdf")
-# question="Jaká gramáž warfarinu je zmíněná v následujícím textu?"
 
 chapters = []
 doctor_prompt="Jaká je smrtelná dávka warfarinu."
 
-# for c in range(len(kapitoly)):
-#   question="Je " + kapitoly[c] + " Relevantni na dotaz: " + doctor_prompt + " ? Pouze ANO nebo NE"
-#   if (respond(question) == "ANO"):
-#     chapters += [c]
+for c in range(len(kapitoly)):
+  question="Je " + kapitoly[c] + " Relevantni na dotaz: " + doctor_prompt + " ? Odpověz pouze ANO nebo NE"
+  if ("ANO" in respond4(question).upper()):
+    chapters += [c]
 
-# print(chapters)
+print(chapters)
 
-respond4(chapters)
-print(respond4['choices'][0]['message']['content'])
