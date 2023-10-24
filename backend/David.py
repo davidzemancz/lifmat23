@@ -14,7 +14,7 @@ def create_query(message):
             },
              {
                 "role": "user", 
-                "content": f'Vytvoř query pro vrácení sloupce SPC podle sloupce NAZEV.'
+                "content": f'Vytvoř query pro vrácení sloupců KOD_SUKL a SPC podle sloupce NAZEV.'
             },
             {
                 "role": "user", 
@@ -36,10 +36,14 @@ def get_pdfs(query):
     cur = con.cursor()
     cur.execute(query)
     rows = cur.fetchall()
-    return list(dict.fromkeys([row[0] for row in rows if row[0] != '']))
+    pdfs = {}
+    for row in rows:
+        if row[1] != '':
+            pdfs[row[1]] = row[0]
+    return [(pdfs[pdf], pdf) for pdf in pdfs]
 
 def test():
-    question = 'Jaké je dávkování léku warfarin orion 3mg?'
+    question = 'Na jaké indikace je určen MAGNEROT 500MG?'
     # question = 'Je pro člověka s horečkou lepší paralen rapid 500mg nebo warfarin pmcs 2mg?'
     # question = 'Jaká je doporučená dávka léku paralen grip 25mg?'
     # question = 'Lze použít lék omeprazol při diabetes?'

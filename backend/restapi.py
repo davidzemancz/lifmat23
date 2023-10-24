@@ -25,7 +25,6 @@ def get_answer(message, pdfs, chapters):
 def ask(message):
     query = create_query(message)
     pdfs = get_pdfs(query)
-
     if len(pdfs) > 2:
         return {
         'isOutgoing': False,
@@ -39,7 +38,8 @@ def ask(message):
     else: chaps = get_chapters(message)
         
     if len(chaps) > 0: 
-        answer = get_answer(message, pdfs, chaps)
+        pdfs_list = list(map(lambda x: x[1], pdfs))
+        answer = get_answer(message, pdfs_list, chaps)
     else:
         return {
         'isOutgoing': False,
@@ -48,11 +48,12 @@ def ask(message):
 
     return {
         'isOutgoing': False,
-        'text': answer
+        'text': answer,
+        'refs': [{ 'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{pdf[0]}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'} for pdf in pdfs]
     }
 
 # Testy
-#print(ask('Jaká je doporučená dávka paralenu pro dospělého?'))
+# print(ask('Na jaké indikace je určen MAGNEROT 500MG?'))
 #print(ask('Na jaké indikace je paralen určen?'))
 #print(ask('Jaké má ewofex nežádoucí účinky?'))
 # print(ask('Jaké jsou kontradikce má LUSIENNE?'))
@@ -78,22 +79,22 @@ def post_message():
     message = request.json
     messages.append(message)
 
-    time.sleep(5)
-
-    answer = {
-        'text': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Aenean fermentum risus id tortor. Integer lacinia. Nullam rhoncus aliquam metus. Integer imperdiet lectus quis justo. ',
-        'isOutgoing': False,
-        'refs':[
-            {
-                'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0094156',
-                'info': "kapitoly 4,5"
-            },
-             {
-                'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0255111',
-                'info': "kapitoly 6"
-            }
-        ]
-     } # ask(message['text'])
+    # time.sleep(5)
+    # answer = {
+    #     'text': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Aenean fermentum risus id tortor. Integer lacinia. Nullam rhoncus aliquam metus. Integer imperdiet lectus quis justo. ',
+    #     'isOutgoing': False,
+    #     'refs':[
+    #         {
+    #             'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0094156',
+    #             'info': "kapitoly 4,5"
+    #         },
+    #          {
+    #             'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0255111',
+    #             'info': "kapitoly 6"
+    #         }
+    #     ]
+    #  } 
+    answer = ask(message['text'])
     messages.append(answer)
 
     return {}
