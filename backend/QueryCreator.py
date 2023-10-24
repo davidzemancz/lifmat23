@@ -21,6 +21,7 @@ def create_query(question):
                 "content": "Vypiš pouze SQL query a žádný text."
             }
     ])
-    print(completion.choices[0].message.content)
+    return completion.choices[0].message.content
 
-create_query('Je lepší pro pacienta s rakovinou plic paralen nebo brufen? Má bolesti hlavy.')
+answer = create_query('Je lepší pro pacienta s rakovinou plic paralen nebo brufen? Má bolesti hlavy.')
+print(answer)

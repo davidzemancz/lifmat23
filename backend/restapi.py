@@ -1,12 +1,13 @@
 from flask import Flask, request
 from flask_cors import CORS
+from QueryCreator import create_query
 app = Flask(__name__)
 CORS(app)
 
 messages = []
 
 def create_query(message):
-    return ''
+    return create_query(message)
 
 def get_pdfs(query):
     return []
