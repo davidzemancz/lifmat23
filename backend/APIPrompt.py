@@ -2,7 +2,8 @@ import os
 import openai
 import PDFreader
 
-openai.api_key = "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"
+openai.api_key = "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"
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 kapitoly = [
@@ -28,7 +29,7 @@ kapitoly = [
     "DATUM REVIZE TEXTU"
 ]
 
-def respond(question):
+def respond35(question):
   response = openai.Completion.create(
     model="gpt-3.5-turbo-instruct",
     # model="gpt-4-0613",
@@ -36,14 +37,28 @@ def respond(question):
     max_tokens=50
   )
 
+  return response['choices'][0]['text']
   print(response['choices'][0]['text'])
+
+def respond4(question):
+  response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": "Co je to paralen?"}
+    ])
 
 prompt=PDFreader.read_chapter(2, "test_pdfs/warfarin.pdf")
 # question="Jaká gramáž warfarinu je zmíněná v následujícím textu?"
 
-kapitoly_str=','.join(kapitoly)
-
+chapters = []
 doctor_prompt="Jaká je smrtelná dávka warfarinu."
-question="Jakých kapitol z následujícího seznamu se týká tento text? Výsledek vrať jako pozice kapitol indexovaných od 0. Kapitoly: " + kapitoly_str + "Text: " + doctor_prompt
 
-respond(question)
+# for c in range(len(kapitoly)):
+#   question="Je " + kapitoly[c] + " Relevantni na dotaz: " + doctor_prompt + " ? Pouze ANO nebo NE"
+#   if (respond(question) == "ANO"):
+#     chapters += [c]
+
+# print(chapters)
+
+respond4(chapters)
+print(respond4['choices'][0]['message']['content'])
