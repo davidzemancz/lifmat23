@@ -5,6 +5,12 @@ CORS(app)
 
 messages = []
 
+def get_answer():
+    return {
+        'isOutgoing': False,
+        'text': 'nema slov'
+    }
+
 @app.route('/messages')
 def get_messages():
     global messages
@@ -19,4 +25,9 @@ def post_message():
     
     message = request.json
     messages.append(message)
+    
+    answer = get_answer()
+    messages.append(answer)
+
     return {}
+
