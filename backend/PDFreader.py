@@ -3,6 +3,9 @@ from pypdf import PdfReader
 
 
 def read_chapter(chap_num, pdf_names):
+    print(pdf_names)
+    if len(pdf_names) > 2:
+         return "Prosim o specifikaci"
     chap_content = ""
     for p in pdf_names:
         pdf_path = f'../../lifmat23_data/spc/{p}'
@@ -14,7 +17,6 @@ def read_chapter(chap_num, pdf_names):
             text += reader.pages[p].extract_text()  
 
         for i in text.splitlines():
-            t = i
             line = i.strip()
             if kapitoly[chap_num] in line.replace(" ", ""):
                 read = True
@@ -23,6 +25,7 @@ def read_chapter(chap_num, pdf_names):
             if read:
                 if line != "":
                     chap_content += line + "\n"
+    print(chap_content)
     return chap_content
 
 kapitoly = [

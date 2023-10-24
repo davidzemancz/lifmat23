@@ -4,7 +4,6 @@ import openai
 def get_chapters(message):
     kapitoly_str = ",".join(kapitoly)
     res = respondPetr(message,kapitoly_str)
-    #print(res)
     return list(map(int,res.split(",")))
 
 def response(question, kapitoly):
