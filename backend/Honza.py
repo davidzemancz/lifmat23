@@ -4,6 +4,7 @@ import openai
 
 def get_answer(message, pdfs, chapters, context):
     text = ""
+    context = [x['text'] for x in  context]
     for c in chapters:
         text += PDFreader.read_chapter(c,pdfs)
 
