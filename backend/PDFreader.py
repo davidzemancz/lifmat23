@@ -3,7 +3,7 @@ from pypdf import PdfReader
 
 
 def read_chapter(chap_num, pdf_names):
-    print(pdf_names)
+    #print(pdf_names)
     if len(pdf_names) > 2:
          return "Prosim o specifikaci"
     chap_content = ""
