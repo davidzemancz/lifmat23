@@ -38,7 +38,7 @@ def ask(message):
 #print(ask('Jaká je doporučená dávka paralenu pro dospělého?'))
 #print(ask('Na jaké indikace je paralen určen?'))
 #print(ask('Jaké má ewofex nežádoucí účinky?'))
-#print(ask('Jaké jsou kontradikce má LUSIENNE?'))
+# print(ask('Jaké jsou kontradikce má LUSIENNE?'))
 
 @app.route('/delete-messages')
 def delete_messages():
