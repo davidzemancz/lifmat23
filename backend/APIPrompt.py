@@ -2,7 +2,7 @@ import os
 import openai
 import PDFreader
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 kapitoly = [
