@@ -25,7 +25,7 @@ def read_chapter(chap_num, pdf_names):
             if read:
                 if line != "":
                     chap_content += line + "\n"
-    print(chap_content)
+    #print(chap_content)
     return chap_content
 
 kapitoly = [
