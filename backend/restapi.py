@@ -15,10 +15,9 @@ def get_pdfs(query):
     rows = cur.fetchall()
     return [row[0] for row in rows if row[0] != '']
 
-def get_chapters(message, pdfs):
-    prompt = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Vrať výsledek jako python list indexů. Oblasti: " + kapitoly_str + "Dotaz: " + message
-
-    return respond4(prompt)
+def get_chapters(message):
+    prompt = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Vrať výsledek jako python list indexů. Oblasti: " + APIPrompt.kapitoly_str + "Dotaz: " + message
+    return APIPrompt.respond4(prompt)
 
 def ask(message, pdfs, chapters):
     return ''
@@ -31,8 +30,9 @@ def get_answer(message):
     # Vratim odpoved
     query = create_query(message)
     pdfs = get_pdfs(query)
-    chaps = get_chapters(pdfs)
-    answer = ask(message, pdfs, chaps)
+    chaps = get_chapters(message)
+    print(chaps)
+    # answer = ask(message, pdfs, chaps)
     
     return {
         'isOutgoing': False,
@@ -40,7 +40,7 @@ def get_answer(message):
     }
 
 # Testy
-# get_answer('Jaká je doporučená dávka paralenu pro dospělého?')
+get_answer('Jaká je doporučená dávka paralenu pro dospělého?')
 # get_answer('Na jaké indikace je abaktal určen?')
 # get_answer('Jaké má ewofex nežádoucí účinky?')
 # get_answer('Jaké jsou kontradikce má LUSIENNE?')
