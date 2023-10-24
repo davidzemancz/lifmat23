@@ -33,6 +33,8 @@ def vrat_context():
 def ask(message):
     query = create_query(message)
     drugs = get_drugs(query)
+    print(drugs)
+    print(query)
     if len(drugs) > 10:
         return {
             'isOutgoing': False,
