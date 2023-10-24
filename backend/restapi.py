@@ -48,11 +48,12 @@ def ask(message):
 
     return {
         'isOutgoing': False,
-        'text': answer
+        'text': answer,
+        'refs': [{ 'url': kod.split('.')[0], 'info': f'kapitoly {",".join([str(c) for c in chaps])}'} for kod in pdfs]
     }
 
 # Testy
-#print(ask('Jaká je doporučená dávka paralenu pro dospělého?'))
+# print(ask('Jaká je doporučená dávka léku paralen plus 325mg?'))
 #print(ask('Na jaké indikace je paralen určen?'))
 #print(ask('Jaké má ewofex nežádoucí účinky?'))
 # print(ask('Jaké jsou kontradikce má LUSIENNE?'))
