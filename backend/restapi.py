@@ -34,7 +34,7 @@ def ask(message):
         return {
             'isOutgoing': False,
             'text': 'Vyberte prosím lék, který vás zajímá.',
-            'options':[{'name': drug[2], 'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{drug[0]}' } for drug in drugs]
+            'options':[{'name': drug[2], 'file': drug[1] } for drug in drugs]
         }
     elif len(drugs) == 0:  
         return {
@@ -86,24 +86,51 @@ def post_message():
     message = request.json
     messages.append(message)
 
-    time.sleep(3)
-    answer = {
-        'text': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Aenean fermentum risus id tortor. Integer lacinia. Nullam rhoncus aliquam metus. Integer imperdiet lectus quis justo. ',
-        'isOutgoing': False,
-        'refs':[
-            {
-                'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0094156',
-                'info': "kapitoly 4,5"
-            },
-             {
-                'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0255111',
-                'info': "kapitoly 6"
+    if message.get('file'):
+        prev_message = messages[-3]
+        file = message['file']
+       
+        chaps = get_chapters(prev_message['text'])
+        if len(chaps) > 0:
+            pdfs_list = [file]
+            answer_text = get_answer(prev_message['text'], pdfs_list, chaps)
+            answer = {
+                'isOutgoing': False,
+                'text': answer_text,
+                'refs': [ {'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{file}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'}]
             }
-        ],
-        'options': [{'name': 'PARALEN GRIP HORKÝ NÁPOJ ECHINACEA A ŠÍPKY 500MG/10MG', 'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0230361'}, {'name': 'PARALEN GRIP CHŘIPKA A BOLEST 500MG/25MG/5MG', 'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0254428'}, {'name': 'PARALEN GRIP CHŘIPKA A KAŠEL 500MG/15MG/5MG', 'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0254464'}, {'name': 'PARALEN GRIP HORKÝ NÁPOJ CITRÓN 650MG/10MG', 'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0254468'}, {'name': 'PARALEN GRIP HORKÝ NÁPOJ NEO 500MG/10MG', 'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0254470'}, {'name': 'PARALEN GRIP HORKÝ NÁPOJ POMERANČ A ZÁZVOR 500MG/10MG', 'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0254472'}, {'name': 'PARALEN GRIP HORKÝ NÁPOJ ECHINACEA A ŠÍPKY 500MG/10MG', 'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0258170'}]
-     } 
-    # answer = ask(message['text'])
-    messages.append(answer)
+            messages.append(answer)
+        else:
+            messages.append({
+                'isOutgoing': False,
+                'text': "Nenalezeny žádné kapitoly."
+            })
+
+    else:
+        time.sleep(3)
+        answer = get_mock_answer()
+        # answer = ask(message['text'])
+        messages.append(answer)
 
     return {}
+
+def get_mock_answer():
+    return {
+            'text': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Aenean fermentum risus id tortor. Integer lacinia. Nullam rhoncus aliquam metus. Integer imperdiet lectus quis justo. ',
+            'isOutgoing': False,
+            'refs':[
+                {
+                    'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0094156',
+                    'info': "kapitoly 4,5"
+                },
+                {
+                    'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0255111',
+                    'info': "kapitoly 6"
+                }
+            ],
+            'options': [{
+                'name': 'PARALEN GRIP HORKÝ NÁPOJ ECHINACEA A ŠÍPKY 500MG/10MG', 
+                'file': 'SPC194750.pdf'
+                }, ]
+        } 
 
