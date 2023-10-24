@@ -136,6 +136,12 @@ def post_message():
     message = request.json
     messages.append(message)
 
+    debug = True
+    if debug:
+        answer = ask(message['text'])
+        messages.append(answer)
+        return {}
+
     if 'file' in message:
         file = message['file']
         pastId = int(message['pastId'])
