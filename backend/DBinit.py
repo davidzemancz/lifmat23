@@ -39,7 +39,7 @@ def create_db():
         query = f'CREATE TABLE {table_name} ({", ".join([col.name + " " + col.data_type for col in tables[table_name]])});'
         cur.execute(query)
 
-        with open(f'..\data\dlp\{table_name}.csv','r') as data_csv:
+        with open(f'..\data\dlp\{table_name}.csv','r', encoding='windows-1250') as data_csv:
             reader = csv.reader(data_csv, delimiter=';')
             to_db = [tuple(row) for row in reader]
         cur.executemany(f'INSERT INTO {table_name} ({", ".join([col.name for col in tables[table_name]])}) VALUES ({",".join(["?" for col in tables[table_name]])});', to_db)
@@ -56,6 +56,7 @@ def create_leky():
     cur.execute(query)
     con.commit()
 
+create_db()
 create_leky()
 
 exit()
