@@ -47,7 +47,7 @@ def ask(message):
         if len(chaps) > 0: 
             pdfs_list = list(map(lambda x: x[1], drugs))
             context = ""
-            if len(messages > 1): context = [x['text'] for x in messages[-2:]]
+            if len(messages ) > 1: context = [x['text'] for x in messages[-2:]]
             answer = get_answer(message, pdfs_list, chaps, context)
         else:
             return {
