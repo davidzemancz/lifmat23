@@ -18,7 +18,7 @@ def create_query(message):
             },
             {
                 "role": "user", 
-                "content": f'Pro oba sloupce použij operátor LIKE s % a velká písmena.'
+                "content": f'Pro oba sloupce použij operátor LIKE s "%" a velká písmena.'
             },
             {
                 "role": "user", 
@@ -40,10 +40,10 @@ def get_pdfs(query):
 
 def test():
     # question = 'Jaký je eliminační poločas warfarinu?'
-    # question = 'Je pro člověka s horečkou lepší paralen grip nebo warfarin?'
-    question = 'Jaká je doporučená dávka léku paralen grip 25mg?'
+    question = 'Je pro člověka s horečkou lepší paralen rapid 500mg nebo warfarin 3mg?'
+    # question = 'Jaká je doporučená dávka léku paralen grip 25mg?'
     # question = 'Lze použít omeprazol při diabetes?'
-    # question = 'Je 1000mg léku atomoxetin actavis smrtelná dávka?'
+    # question = 'Je dávka 1000mg léku atomoxetin actavis smrtelná dávka?'
 
     query = create_query(question)
     print(query)
