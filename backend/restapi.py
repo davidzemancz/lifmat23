@@ -23,23 +23,27 @@ def get_answer(message, pdfs, chapters):
     return Honza.get_answer(message, pdfs, chapters)
 
 def ask(message):
-  
     query = create_query(message)
     pdfs = get_pdfs(query)
-    if len(pdfs) > 0: 
-        chaps = get_chapters(message)
-    else:
+
+    if len(pdfs) > 5: 
         return {
         'isOutgoing': False,
-        'text': "No pdfs found."
+        'text': "Zadejte přesnější dotaz."
     }
+    elif len(pdfs) == 0:  
+        return {
+        'isOutgoing': False,
+        'text': "Nenalezeny žádné pdf."
+    }
+    else: chaps = get_chapters(message)
         
     if len(chaps) > 0: 
         answer = get_answer(message, pdfs, chaps)
     else:
         return {
         'isOutgoing': False,
-        'text': "No chapters found."
+        'text': "Nenalezeny žádné kapitoly."
     }
 
     return {
