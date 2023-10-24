@@ -4,7 +4,7 @@ import openai
 
 def get_answer(message, pdfs, chapters, context):
     text = ""
-    context = [x['text'] for x in  context]
+    cont = [x['text'] for x in  context]
     for c in chapters:
         text += PDFreader.read_chapter(c,pdfs)
 
@@ -13,7 +13,7 @@ def get_answer(message, pdfs, chapters, context):
     messages=[
         {
           "role": "system", 
-          "content": "Máš k dispozici následující kontext." + ",".join(context)
+          "content": "Máš k dispozici následující kontext." + ",".join(cont)
         },
         {
           "role": "user",
