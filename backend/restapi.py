@@ -58,7 +58,7 @@ def post_message():
     global messages
     
     message = request.json
-    answer = ask(message)
+    answer = ask(message['text'])
     
     messages.append(message)
     messages.append(answer)
