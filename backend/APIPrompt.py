@@ -55,6 +55,6 @@ areas = "Doporucena davka, Predavkovani, Inkompatibilita, Nezadouci ucinky."
 
 kapitoly_str = ",".join(kapitoly)
 
-question = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Oblasti: " + kapitoly_str + "Dotaz: " + doctor_prompt
+question = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Vrať výsledek jako python list indexů. Oblasti: " + kapitoly_str + "Dotaz: " + doctor_prompt
 
 print(respond4(question))

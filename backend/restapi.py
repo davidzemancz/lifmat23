@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from QueryCreator import create_query
 import sqlite3
+import APIPrompt
 app = Flask(__name__)
 CORS(app)
 
@@ -15,7 +16,9 @@ def get_pdfs(query):
     return [row[0] for row in rows if row[0] != '']
 
 def get_chapters(message, pdfs):
-    return []
+    prompt = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Vrať výsledek jako python list indexů. Oblasti: " + kapitoly_str + "Dotaz: " + message
+
+    return respond4(prompt)
 
 def ask(message, pdfs, chapters):
     return ''
