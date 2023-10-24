@@ -14,11 +14,11 @@ def create_query(question):
             },
              {
                 "role": "user", 
-                "content": f'Vytvoř query pro vrácení sloupce SPC podle názvu psaného léku velkými písmeny pro následující dotaz: {question}'
+                "content": f'Vytvoř query pro vrácení sloupce SPC podle názvu léku psaného velkými písmeny pro následující dotaz: {question}'
             },
             {
                 "role": "user", 
-                "content": "Vypiš pouze SQL query jako prostý text a nic dalšího."
+                "content": "Vypiš pouze SQL query jako prostý text, ne jako kód, a nic dalšího."
             }
     ])
     return completion.choices[0].message.content
