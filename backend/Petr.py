@@ -4,6 +4,7 @@ import openai
 def get_chapters(message):
     kapitoly_str = ",".join(kapitoly)
     res = respondPetr(message,kapitoly_str)
+    #print(res)
     return list(map(int,res.split(",")))
 
 def respondPetr(question, kapitoly):
@@ -16,14 +17,15 @@ def respondPetr(question, kapitoly):
             },
              {
                 "role": "user", 
-                "content": f'Kterých z následujících kapitol se dotaz týká násleující dotaz. Dotaz:{question}, Kapitoly:{kapitoly}'
+                "content": f'Kterých všech z následujících kapitol se týká násleující dotaz. Dotaz:{question}, Kapitoly:{kapitoly}'
             },
             {
                 "role": "assistant", 
-                "content": "Vypiš indexy čísla kapitol oddělěné čárkou, nic dalšího. Neumíš psát písmena. Indexy jsou od 0"
+                "content": "Vypiš index kapitol oddělěné čárkou, nic dalšího. Neumíš psát písmena. Indexy jsou od 0"
             }
     ])
 
+  #print(response) 
   return (response.choices[0].message.content)
 
 
