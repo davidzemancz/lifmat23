@@ -138,7 +138,8 @@ def post_message():
 
     debug = True
     if debug:
-        answer = ask(message['text'])
+        time.sleep(3)
+        answer = get_mock_answer()
         messages.append(answer)
         return {}
 
