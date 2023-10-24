@@ -47,7 +47,11 @@ doctor_prompt="Jaká je smrtelná dávka warfarinu."
 
 for c in range(len(kapitoly)):
   question="Je " + kapitoly[c] + " Relevantni na dotaz: " + doctor_prompt + " ? Pouze ANO nebo NE"
-  if (respond(question) == "ANO"):
+  res = respond(question)
+  if (res == "ANO"):
     chapters += [c]
+  else:
+    print(res)
+
 
 print(chapters)
