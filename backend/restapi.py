@@ -1,16 +1,18 @@
 from flask import Flask, request
 from flask_cors import CORS
 from QueryCreator import create_query
+import sqlite3
 app = Flask(__name__)
 CORS(app)
 
 messages = []
 
-def create_query(message):
-    return create_query(message)
-
 def get_pdfs(query):
-    return []
+    con = sqlite3.connect("data.db") 
+    cur = con.cursor()
+    cur.execute(query)
+    rows = cur.fetchall()
+    return [row[0] for row in rows if row[0] != '']
 
 def get_chapters(message, pdfs):
     return []
@@ -26,6 +28,7 @@ def get_answer(message):
     # Vratim odpoved
     query = create_query(message)
     pdfs = get_pdfs(query)
+
     chaps = get_chapters(pdfs)
     answer = ask(message, pdfs, chaps)
     
@@ -33,6 +36,7 @@ def get_answer(message):
         'isOutgoing': False,
         'text': answer
     }
+
 
 @app.route('/delete-messages')
 def delete_messages():
