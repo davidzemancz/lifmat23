@@ -26,11 +26,8 @@ def ask(message, pdfs, chapters):
     for c in chapters:
         text += PDFreader.read_chapter(c,pdfs[0])
     
-    # print(text)
-
-    prompt = "Na základě následující otázky najdi odpověď v následujícím textu. Otázka: " + message + "Text : " + text
+    prompt = "Na základě následující otázky najdi odpověď v následujícím textu. Odpověz stručně. Otázka: " + message + "Text : " + text
     res = APIPrompt.respond4(prompt)
-    print(res)
     return res
 
 def get_answer(message):
@@ -42,8 +39,9 @@ def get_answer(message):
     query = create_query(message)
     pdfs = get_pdfs(query)
     chaps = get_chapters(message)
-    print(chaps)
     answer = ask(message, pdfs, chaps)
+
+    print(answer)
     
     return {
         'isOutgoing': False,
@@ -51,10 +49,10 @@ def get_answer(message):
     }
 
 # Testy
-get_answer('Jaká je doporučená dávka paralenu pro dospělého?')
-# get_answer('Na jaké indikace je abaktal určen?')
-# get_answer('Jaké má ewofex nežádoucí účinky?')
-# get_answer('Jaké jsou kontradikce má LUSIENNE?')
+#get_answer('Jaká je doporučená dávka paralenu pro dospělého?')
+#get_answer('Na jaké indikace je paralen určen?')
+#get_answer('Jaké má ewofex nežádoucí účinky?')
+get_answer('Jaké jsou kontradikce má LUSIENNE?')
 
 @app.route('/delete-messages')
 def delete_messages():

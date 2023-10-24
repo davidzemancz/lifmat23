@@ -3,8 +3,6 @@ from pypdf import PdfReader
 
 
 def read_chapter(chap_num, pdf_name):
-    print(chap_num)
-    print(pdf_name)
     pdf_path = f'../../lifmat23_data/spc/{pdf_name}'
     reader = PdfReader(pdf_path)
     number_of_pages = len(reader.pages)
