@@ -24,4 +24,4 @@ for lek in db:
     img.save(f'qrcodes/qr_code_{lek}.png')
 
     #Save qrcode path to dict
-    qrcode_path[lek] = qrcodes/qr_code_{lek}.png
+    qrcode_path[lek] = f'qrcodes/qr_code_{lek}.png'
