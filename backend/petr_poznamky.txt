@@ -1,0 +1,2 @@
+-> zlepseni hledani kapitol: Rucne/z databaze vypsat medicinske zkratky a kterych kapitol se tykaji Tato akce se provede jednou
+        a databaze uz prevod bude umet naporad.

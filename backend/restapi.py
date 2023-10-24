@@ -19,8 +19,8 @@ def get_drugs(query):
 def get_chapters(message):
     return Petr.get_chapters(message)
 
-def get_answer(message, pdfs, chapters):
-    return Honza.get_answer(message, pdfs, chapters)
+def get_answer(message, pdfs, chapters, context):
+    return Honza.get_answer(message, pdfs, chapters, context)
 
 def ask(message):
     query = create_query(message)
@@ -46,7 +46,9 @@ def ask(message):
         chaps = get_chapters(message)
         if len(chaps) > 0: 
             pdfs_list = list(map(lambda x: x[1], drugs))
-            answer = get_answer(message, pdfs_list, chaps)
+            context = ""
+            if len(messages > 1): context = [x['text'] for x in messages[-2:]]
+            answer = get_answer(message, pdfs_list, chaps, context)
         else:
             return {
             'isOutgoing': False,

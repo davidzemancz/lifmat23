@@ -1,11 +1,23 @@
 import APIPrompt
 import PDFreader
+import openai
 
-def get_answer(message, pdfs, chapters):
+def get_answer(message, pdfs, chapters, context):
     text = ""
     for c in chapters:
         text += PDFreader.read_chapter(c,pdfs)
-    
-    prompt = "Na základě následující otázky najdi stručnou odpověď v následujícím textu. Otázka: " + message + "Text : " + text
-    res = APIPrompt.respond4(prompt)
-    return res
+
+    response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[
+        {
+          "role": "system", 
+          "content": "Máš k dispozici následující kontext." + context
+        },
+        {
+          "role": "user",
+          "content": "Na základě následující otázky najdi stručnou odpověď v následujícím textu. Otázka: " + message + " Text: " + text
+        }
+    ])
+
+    return (response.choices[0].message.content)
