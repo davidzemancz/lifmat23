@@ -19,16 +19,19 @@ def get_pdfs(query):
 def get_chapters(message):
     prompt = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Vrať výsledek jako indexy odělené čárkou. Oblasti: " + APIPrompt.kapitoly_str + "Dotaz: " + message
     res = APIPrompt.respond4(prompt)
-    return  list(map(int,res.split(",")))
+    return list(map(int,res.split(",")))
 
 def ask(message, pdfs, chapters):
     text = ""
     for c in chapters:
         text += PDFreader.read_chapter(c,pdfs[0])
     
-    print(text)
-    return text
-    return read_chapter()
+    # print(text)
+
+    prompt = "Na základě následující otázky najdi odpověď v následujícím textu. Otázka: " + message + "Text : " + text
+    res = APIPrompt.respond4(prompt)
+    print(res)
+    return res
 
 def get_answer(message):
     # Vygenerovat query do DN pro vraceni PDF
