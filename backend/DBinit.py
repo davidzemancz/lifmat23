@@ -44,12 +44,12 @@ for table_name in tables:
     con.commit()
 
 
-exit()
-
-con = sqlite3.connect('test.db')
+# Global table
 cur = con.cursor()
-cur.execute("CREATE TABLE movie(title, year, score)")
-con.commit()
+table_name = 'leky'
+cur.execute(f'DROP TABLE IF EXISTS {table_name}')
+query = f'CREATE TABLE {table_name} (KOD_SUKL, NAZEV, SPC);'
+cur.execute(query)
 
-res = cur.execute("SELECT score FROM movie")
-print(res.fetchall())
+
+exit()
