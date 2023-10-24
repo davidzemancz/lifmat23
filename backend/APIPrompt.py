@@ -2,9 +2,25 @@ import os
 import openai
 import PDFreader
 
-openai.api_key = "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"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+def respond35(question):
+  response = openai.Completion.create(
+    model="gpt-3.5-turbo-instruct",
+    prompt=question,
+    max_tokens=100
+  )
+
+  return response['choices'][0]['text']
+
+def respond4(question):
+  response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": question}
+    ])
+
+  return (response['choices'][0]['message']['content'])
 
 kapitoly = [
     "NÁZEV PŘÍPRAVKU",                                                             
@@ -29,35 +45,16 @@ kapitoly = [
     "DATUM REVIZE TEXTU"
 ]
 
-def respond35(question):
-  response = openai.Completion.create(
-    model="gpt-3.5-turbo-instruct",
-    # model="gpt-4-0613",
-    prompt=question,
-    max_tokens=50
-  )
-
-  return response['choices'][0]['text']
-  print(response['choices'][0]['text'])
-
-def respond4(question):
-  response = openai.ChatCompletion.create(
-    model="gpt-4",
-    messages=[
-        {"role": "system", "content": question}
-    ])
-
-  return (response['choices'][0]['message']['content'])
-
-prompt=PDFreader.read_chapter(2, "test_pdfs/warfarin.pdf")
+prompt = PDFreader.read_chapter(2, "test_pdfs/warfarin.pdf")
 
 chapters = []
-doctor_prompt="Jaká je smrtelná dávka warfarinu."
+doctor_prompt = "Jaká je smrtelná dávka warfarinu."
+doctor_prompt = "Jake jsou vedlejsi ucinky warfarinu pri brani s paralenem?"
 
-for c in range(len(kapitoly)):
-  question="Je " + kapitoly[c] + " Relevantni na dotaz: " + doctor_prompt + " ? Odpověz pouze ANO nebo NE"
-  if ("ANO" in respond4(question).upper()):
-    chapters += [c]
+areas = "Doporucena davka, Predavkovani, Inkompatibilita, Nezadouci ucinky."
 
-print(chapters)
+kapitoly_str = ",".join(kapitoly)
 
+question = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Oblasti: " + kapitoly_str + "Dotaz: " + doctor_prompt
+
+print(respond4(question))
