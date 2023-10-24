@@ -1,58 +1,43 @@
 from flask import Flask, request
 from flask_cors import CORS
-from QueryCreator import create_query
-import sqlite3
-import APIPrompt
-import PDFreader
+import David
+import Honza
+import Petr
+
 app = Flask(__name__)
 CORS(app)
 
 messages = []
 
+def create_query(message):
+    return David.create_query(message)
+
 def get_pdfs(query):
-    con = sqlite3.connect("data.db") 
-    cur = con.cursor()
-    cur.execute(query)
-    rows = cur.fetchall()
-    return [row[0] for row in rows if row[0] != '']
+    return David.get_pdfs(query)
 
 def get_chapters(message):
-    prompt = "Jakých z následujícíh oblastí se týká následující dotaz? Můžeš vrátit víc oblastí. Vrať výsledek jako indexy odělené čárkou. Oblasti: " + APIPrompt.kapitoly_str + "Dotaz: " + message
-    res = APIPrompt.respond4(prompt)
-    return list(map(int,res.split(",")))
+    return Petr.get_chapters(message)
 
-def ask(message, pdfs, chapters):
-    text = ""
-    for c in chapters:
-        text += PDFreader.read_chapter(c,pdfs[0])
-    
-    prompt = "Na základě následující otázky najdi odpověď v následujícím textu. Odpověz stručně. Otázka: " + message + "Text : " + text
-    res = APIPrompt.respond4(prompt)
-    return res
+def get_answer(message, pdfs, chapters):
+    return Honza.get_answer(message, pdfs, chapters)
 
-def get_answer(message):
-    # Vygenerovat query do DN pro vraceni PDF
-    # Nacist prislusna PDF ze souboru
-    # Musim z PDF vybrat, ktery odstavec me zajima
-    # Zeptam se na dotaz v kontextu prislusnych kapitol
-    # Vratim odpoved
+def ask(message):
+  
     query = create_query(message)
     pdfs = get_pdfs(query)
     chaps = get_chapters(message)
-    answer = ask(message, pdfs, chaps)
+    answer = get_answer(message, pdfs, chaps)
 
-    print(answer)
-    
     return {
         'isOutgoing': False,
         'text': answer
     }
 
 # Testy
-#get_answer('Jaká je doporučená dávka paralenu pro dospělého?')
+print(ask('Jaká je doporučená dávka paralenu pro dospělého?'))
 #get_answer('Na jaké indikace je paralen určen?')
 #get_answer('Jaké má ewofex nežádoucí účinky?')
-get_answer('Jaké jsou kontradikce má LUSIENNE?')
+# get_answer('Jaké jsou kontradikce má LUSIENNE?')
 
 @app.route('/delete-messages')
 def delete_messages():
@@ -73,7 +58,7 @@ def post_message():
     global messages
     
     message = request.json
-    answer = get_answer(message)
+    answer = ask(message)
     
     messages.append(message)
     messages.append(answer)
