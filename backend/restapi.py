@@ -27,23 +27,20 @@ def get_answer(message):
     # Zeptam se na dotaz v kontextu prislusnych kapitol
     # Vratim odpoved
     query = create_query(message)
-    print(query)
     pdfs = get_pdfs(query)
-    print(pdfs)
-
-    # chaps = get_chapters(pdfs)
-    # answer = ask(message, pdfs, chaps)
+    chaps = get_chapters(pdfs)
+    answer = ask(message, pdfs, chaps)
     
-    # return {
-    #     'isOutgoing': False,
-    #     'text': answer
-    # }
+    return {
+        'isOutgoing': False,
+        'text': answer
+    }
 
 # Testy
-get_answer('Jaká je doporučená dávka paralenu pro dospělého?')
-get_answer('Na jaké indikace je abaktal určen?')
-get_answer('Jaké má ewofex nežádoucí účinky?')
-get_answer('Jaké jsou kontradikce má LUSIENNE?')
+# get_answer('Jaká je doporučená dávka paralenu pro dospělého?')
+# get_answer('Na jaké indikace je abaktal určen?')
+# get_answer('Jaké má ewofex nežádoucí účinky?')
+# get_answer('Jaké jsou kontradikce má LUSIENNE?')
 
 @app.route('/delete-messages')
 def delete_messages():
