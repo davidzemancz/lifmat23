@@ -22,6 +22,14 @@ def get_chapters(message):
 def get_answer(message, pdfs, chapters, context):
     return Honza.get_answer(message, pdfs, chapters, context)
 
+
+def vrat_context():
+    if len(messages ) > 2:
+        if 'chaps' in messages[-2]:
+            return [x for x in messages[-3:-1]]
+        return []
+
+
 def ask(message):
     query = create_query(message)
     drugs = get_drugs(query)
@@ -38,16 +46,30 @@ def ask(message):
             'pastId':len(messages) - 1
         }
     elif len(drugs) == 0:  
+        context = vrat_context()
+        if len(context) > 0:
+            chaps = context[1]['chaps']
+            pdfs_list = context[1]['pdf_list']
+            answer = get_answer(message, pdfs_list, chaps, context)
+
+            return {
+                'isOutgoing': False,
+                'text': answer,
+                'refs': [{ 'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{drug[0]}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'} for drug in drugs],
+                'chaps': chaps,
+                'pdf_list': pdfs_list
+            }
+
         return {
             'isOutgoing': False,
             'text': "K vašemu dotazu nebyly nalezeny žádné informace."
+
     }
     else: 
         chaps = get_chapters(message)
         if len(chaps) > 0: 
             pdfs_list = list(map(lambda x: x[1], drugs))
             context = ""
-            if len(messages ) > 1: context = [x['text'] for x in messages[-2:]]
             answer = get_answer(message, pdfs_list, chaps, context)
 
             return {
