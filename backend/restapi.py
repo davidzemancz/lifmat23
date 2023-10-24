@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
 
 
@@ -18,3 +18,8 @@ def get_messages():
             }
         ]
     }
+
+@app.route('/post-message', methods=['POST'])
+def post_message():
+    data = request.json
+    return data
