@@ -81,7 +81,7 @@ def post_message():
     time.sleep(5)
 
     answer = {
-        'text': 'posli nudes',
+        'text': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Aenean fermentum risus id tortor. Integer lacinia. Nullam rhoncus aliquam metus. Integer imperdiet lectus quis justo. ',
         'isOutgoing': False,
         'refs':[
             {
