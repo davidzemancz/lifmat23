@@ -49,6 +49,7 @@ def ask(message):
         }
     elif len(drugs) == 0:  
         context = vrat_context()
+        drugs = [0]
         if len(context) > 0:
             chaps = context[1]['chaps']
             pdfs_list = context[1]['pdf_list']
