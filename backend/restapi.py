@@ -65,17 +65,16 @@ def ask_detailed(file, pastId):
     if len(chaps) > 0:
         pdfs_list = [file]
         answer_text = get_answer(prev_message['text'], pdfs_list, chaps)
-        answer = {
+        return {
             'isOutgoing': False,
             'text': answer_text,
             'refs': [ {'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{file}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'}]
         }
-        messages.append(answer)
     else:
-        messages.append({
+        return {
             'isOutgoing': False,
             'text': "Nenalezeny žádné kapitoly."
-        })
+        }
 
 
 # Testy
@@ -109,6 +108,7 @@ def post_message():
         file = messages['file']
         pastId = messages['pastId']
         answer = ask_detailed(file, pastId)
+        messages.append(answer)
 
     else:
         # time.sleep(3)
