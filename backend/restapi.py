@@ -5,7 +5,13 @@ CORS(app)
 
 messages = []
 
-def get_answer():
+def get_answer(message):
+    # Vygenerovat query do DN pro vraceni PDF
+    # Nacist prislusna PDF ze souboru
+    # Musim z PDF vybrat, ktery odstavec me zajima
+    # Zeptam se na dotaz v kontextu prislusnych kapitol
+    # Vratim odpoved
+
     return {
         'isOutgoing': False,
         'text': 'nema slov'
@@ -30,9 +36,9 @@ def post_message():
     global messages
     
     message = request.json
-    messages.append(message)
+    answer = get_answer(message)
     
-    answer = get_answer()
+    messages.append(message)
     messages.append(answer)
 
     return {}
