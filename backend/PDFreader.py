@@ -19,7 +19,6 @@ def read_chapter(chap_num, pdf_name):
         if read:
             if line != "":
                 chap_content += line + "\n"
-                print("##" + repr(t))
     return chap_content
 
 kapitoly = [

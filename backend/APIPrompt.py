@@ -2,7 +2,8 @@ import os
 import openai
 import PDFreader
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = "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"
+
 
 kapitoly = [
     "NÁZEV PŘÍPRAVKU",                                                             
@@ -30,6 +31,7 @@ kapitoly = [
 def respond(question):
   response = openai.Completion.create(
     model="gpt-3.5-turbo-instruct",
+    # model="gpt-4-0613",
     prompt=question,
     max_tokens=50
   )
@@ -37,9 +39,11 @@ def respond(question):
   print(response['choices'][0]['text'])
 
 prompt=PDFreader.read_chapter(2, "test_pdfs/warfarin.pdf")
-question="Jaká gramáž warfarinu je zmíněná v následujícím textu?"
+# question="Jaká gramáž warfarinu je zmíněná v následujícím textu?"
 
-# prompt="From the following text, find how many tables of paralen should I take: Paralen is medical drug. You should take 1-2 tablets of paralen. Never take more than 5 tablets."
+kapitoly_str=','.join(kapitoly)
 
-respond(question+prompt)
+doctor_prompt="Jaká je smrtelná dávka warfarinu."
+question="Jakých kapitol z následujícího seznamu se týká tento text? Výsledek vrať jako pozice kapitol indexovaných od 0. Kapitoly: " + kapitoly_str + "Text: " + doctor_prompt
 
+respond(question)
