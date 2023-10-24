@@ -14,7 +14,7 @@ def create_query(message):
             },
              {
                 "role": "user", 
-                "content": f'Vytvoř query pro vrácení sloupců KOD_SUKL a SPC podle sloupce NAZEV.'
+                "content": f'Vytvoř query pro vrácení sloupců NAZEV, KOD_SUKL a SPC podle sloupce NAZEV.'
             },
             {
                 "role": "user", 
@@ -31,7 +31,7 @@ def create_query(message):
     ])
     return completion.choices[0].message.content
 
-def get_pdfs(query):
+def get_drugs(query):
     con = sqlite3.connect("data.db") 
     cur = con.cursor()
     cur.execute(query)
@@ -39,8 +39,8 @@ def get_pdfs(query):
     pdfs = {}
     for row in rows:
         if row[1] != '':
-            pdfs[row[1]] = row[0]
-    return [(pdfs[pdf], pdf) for pdf in pdfs]
+            pdfs[row[2]] = (row[0], row[1])
+    return [(pdfs[pdf][1], pdf, pdfs[pdf][0]) for pdf in pdfs]
 
 def test():
     question = 'Na jaké indikace je určen MAGNEROT 500MG?'
@@ -51,7 +51,7 @@ def test():
 
     query = create_query(question)
     print(query)
-    pdfs = get_pdfs(query)
+    pdfs = get_drugs(query)
     print(pdfs)
     print(query)
     print(len(pdfs))
