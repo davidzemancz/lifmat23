@@ -7,8 +7,8 @@ def get_chapters(message):
     #print(res)
     return list(map(int,res.split(",")))
 
-def respondPetr(question, kapitoly):
-  response = openai.ChatCompletion.create(
+def response(question, kapitoly):
+    return  openai.ChatCompletion.create(
     model="gpt-4",
     messages=[
             {
@@ -24,9 +24,13 @@ def respondPetr(question, kapitoly):
                 "content": "Vypiš index kapitol oddělěné čárkou, nic dalšího. Neumíš psát písmena. Indexy jsou od 0"
             }
     ])
+     
 
-  #print(response) 
-  return (response.choices[0].message.content)
+def respondPetr(question, kapitoly):
+    res =  response(question,kapitoly)
+
+    #print(res) 
+    return (res.choices[0].message.content)
 
 
 kapitoly = [
