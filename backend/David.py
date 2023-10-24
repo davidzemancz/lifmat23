@@ -33,12 +33,13 @@ def get_pdfs(query):
 def test():
     question = 'Jaký je eliminační poločas warfarinu?'
     question = 'Je pro člověka s horečkou lepší paralen nebo warfarin?'
-    question = 'Jaká je doporučená dávka paralenu?'
-    question = 'Lze použít omeprazol při diabetes?'
+    question = 'Jaká je doporučená dávka léku paralen grip?'
+    # question = 'Lze použít omeprazol při diabetes?'
 
     query = create_query(question)
     print(query)
     pdfs = get_pdfs(query)
     print(pdfs)
+    print(len(pdfs))
 
 # test()
