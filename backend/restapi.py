@@ -26,7 +26,7 @@ def ask(message):
     query = create_query(message)
     pdfs = get_pdfs(query)
 
-    if len(pdfs) > 5: 
+    if len(pdfs) > 2:
         return {
         'isOutgoing': False,
         'text': "Zadejte přesnější dotaz."
