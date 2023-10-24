@@ -3,6 +3,7 @@ from flask_cors import CORS
 import David
 import Honza
 import Petr
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -58,9 +59,14 @@ def post_message():
     global messages
     
     message = request.json
-    answer = ask(message['text'])
-    
     messages.append(message)
+
+    time.sleep(5)
+
+    answer = {
+        'text': 'posli nudes',
+        'isOutgoing': False
+     } # ask(message['text'])
     messages.append(answer)
 
     return {}
