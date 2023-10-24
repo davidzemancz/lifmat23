@@ -18,7 +18,7 @@ def create_query(message):
             },
             {
                 "role": "user", 
-                "content": f'Použij operátor LIKE s "%" a UPPER.'
+                "content": f'Použij operátor LIKE s "%" i mezi slovy a UPPER.'
             },
             {
                 "role": "user", 
@@ -39,13 +39,14 @@ def get_pdfs(query):
     return list(dict.fromkeys([row[0] for row in rows if row[0] != '']))
 
 def test():
-    question = 'Jaké je dávkování warfarinu pro dospělé?'
-    # question = 'Je pro člověka s horečkou lepší paralen rapid 500mg nebo warfarin 3mg?'
+    # question = 'Jaké je dávkování warfarinu pro dospělé?'
+    # question = 'Je pro člověka s horečkou lepší paralen rapid 500mg nebo warfarin pmcs 2mg?'
     # question = 'Jaká je doporučená dávka léku paralen grip 25mg?'
-    # question = 'Lze použít omeprazol při diabetes?'
-    # question = 'Je dávka 1000mg léku atomoxetin actavis smrtelná dávka?'
+    # question = 'Lze použít lék omeprazol při diabetes?'
+    question = 'Je dávka 1000mg léku atomoxetin actavis smrtelná dávka?'
 
     query = create_query(question)
+    print(query)
     pdfs = get_pdfs(query)
     print(pdfs)
     print(query)
