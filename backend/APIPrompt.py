@@ -4,6 +4,29 @@ import PDFreader
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+kapitoly = [
+    "NÁZEV PŘÍPRAVKU",                                                             
+    "KVALITATIVNÍ A KVANTITATIVN ÍSLOŽENÍ",                                          
+    "LÉKOVÁ FORMA",                                                                                                       
+    "Terapeutické indikace",
+    "Dávkování a způsob podání",
+    "Kontra indikace",
+    "Zvláštní upozornění a opatření pro použití",
+    "Interakce s jinými léčivými přípravky a jiné formy interakce",
+    "Fertilita,těhotenství a kojení",
+    "Účinky na schopnost řídit a obsluhovat stroje",
+    "Nežádoucí účinky",
+    "Předávkování",
+    "Farmakodynamické vlastnosti",
+    "Farmakokinetické vlastnosti",
+    "Předklinické údaje vztahující se k bezpečnosti",
+    "FARMACEUTICKÉ ÚDAJE",
+    "DRŽITEL ROZHODNUTÍ O REGISTRACI",
+    "REGISTRAČNÍ ČÍSLO(A)",
+    "DATUM PRVNÍ REGISTRACE/PRODLOUŽENÍ REGISTRACE",
+    "DATUM REVIZE TEXTU"
+]
+
 def respond(question):
   response = openai.Completion.create(
     model="gpt-3.5-turbo-instruct",
