@@ -33,7 +33,7 @@ def extract_word(text):
 	    print(kw)
 
 def test_pdf():
-    pdf_path = "test_pdfs/omeprazol.pdf"
+    pdf_path = "test_pdfs/aspirin.pdf"
     reader = PdfReader(pdf_path)
     number_of_pages = len(reader.pages)
     text = ""
