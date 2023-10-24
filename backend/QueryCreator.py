@@ -6,7 +6,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 def create_query(question):
 
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", 
+        model="gpt-4", 
         messages=[
             {
                 "role": "user", 
@@ -18,7 +18,7 @@ def create_query(question):
             },
             {
                 "role": "user", 
-                "content": "Vypiš pouze SQL query a žádný text."
+                "content": "Vypiš pouze SQL query jako prostý text a nic dalšího."
             }
     ])
     return completion.choices[0].message.content
