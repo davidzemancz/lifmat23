@@ -2,26 +2,27 @@ from pypdf import PdfReader
 
 
 
-def read_chapter(chap_num, pdf_name):
-    pdf_path = f'../../lifmat23_data/spc/{pdf_name}'
-    reader = PdfReader(pdf_path)
-    number_of_pages = len(reader.pages)
-    text = ""
+def read_chapter(chap_num, pdf_names):
     chap_content = ""
-    read = False
-    for p in range(number_of_pages):
-        text += reader.pages[p].extract_text()  
+    for p in pdf_names:
+        pdf_path = f'../../lifmat23_data/spc/{p}'
+        reader = PdfReader(pdf_path)
+        number_of_pages = len(reader.pages)
+        read = False
+        text = ""
+        for p in range(number_of_pages):
+            text += reader.pages[p].extract_text()  
 
-    for i in text.splitlines():
-        t = i
-        line = i.strip()
-        if kapitoly[chap_num] in line.replace(" ", ""):
-            read = True
-        if len(kapitoly) > chap_num + 1 and kapitoly[chap_num + 1] in line.replace(" ", "") and read == True:
-                read = False
-        if read:
-            if line != "":
-                chap_content += line + "\n"
+        for i in text.splitlines():
+            t = i
+            line = i.strip()
+            if kapitoly[chap_num] in line.replace(" ", ""):
+                read = True
+            if len(kapitoly) > chap_num + 1 and kapitoly[chap_num + 1] in line.replace(" ", "") and read == True:
+                    read = False
+            if read:
+                if line != "":
+                    chap_content += line + "\n"
     return chap_content
 
 kapitoly = [

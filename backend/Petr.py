@@ -28,8 +28,6 @@ def response(question, kapitoly):
 
 def respondPetr(question, kapitoly):
     res =  response(question,kapitoly)
-
-    #print(res) 
     return (res.choices[0].message.content)
 
 
