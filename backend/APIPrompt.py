@@ -36,14 +36,18 @@ def respond(question):
     max_tokens=50
   )
 
+  return response['choices'][0]['text']
   print(response['choices'][0]['text'])
 
 prompt=PDFreader.read_chapter(2, "test_pdfs/warfarin.pdf")
 # question="Jaká gramáž warfarinu je zmíněná v následujícím textu?"
 
-kapitoly_str=','.join(kapitoly)
-
+chapters = []
 doctor_prompt="Jaká je smrtelná dávka warfarinu."
-question="Jakých kapitol z následujícího seznamu se týká tento text? Výsledek vrať jako pozice kapitol indexovaných od 0. Kapitoly: " + kapitoly_str + "Text: " + doctor_prompt
 
-respond(question)
+for c in range(len(kapitoly)):
+  question="Je " + kapitoly[c] + " Relevantni na dotaz: " + doctor_prompt + " ? Pouze ANO nebo NE"
+  if (respond(question) == "ANO"):
+    chapters += [c]
+
+print(chapters)
