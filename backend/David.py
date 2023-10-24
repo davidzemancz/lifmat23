@@ -14,7 +14,11 @@ def create_query(message):
             },
              {
                 "role": "user", 
-                "content": f'Vytvoř query pro vrácení sloupce SPC podle sloucpů NAZEV a SILA.'
+                "content": f'Vytvoř query pro vrácení sloupce SPC podle sloupce NAZEV.'
+            },
+              {
+                "role": "user", 
+                "content": f'Pokud je uvedena hodnota v mg, tak hledej i podle slouce SILA.'
             },
             {
                 "role": "user", 
@@ -39,8 +43,8 @@ def get_pdfs(query):
     return list(dict.fromkeys([row[0] for row in rows if row[0] != '']))
 
 def test():
-    # question = 'Jaký je eliminační poločas warfarinu?'
-    question = 'Je pro člověka s horečkou lepší paralen rapid 500mg nebo warfarin 3mg?'
+    question = 'Jaký je eliminační poločas warfarinu?'
+    # question = 'Je pro člověka s horečkou lepší paralen rapid 500mg nebo warfarin 3mg?'
     # question = 'Jaká je doporučená dávka léku paralen grip 25mg?'
     # question = 'Lze použít omeprazol při diabetes?'
     # question = 'Je dávka 1000mg léku atomoxetin actavis smrtelná dávka?'
