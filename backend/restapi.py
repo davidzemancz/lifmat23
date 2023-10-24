@@ -26,8 +26,21 @@ def ask(message):
   
     query = create_query(message)
     pdfs = get_pdfs(query)
-    chaps = get_chapters(message)
-    answer = get_answer(message, pdfs, chaps)
+    if len(pdfs) > 0: 
+        chaps = get_chapters(message)
+    else:
+        return {
+        'isOutgoing': False,
+        'text': "No pdfs found."
+    }
+        
+    if len(chaps) > 0: 
+        answer = get_answer(message, pdfs, chaps)
+    else:
+        return {
+        'isOutgoing': False,
+        'text': "No chapters found."
+    }
 
     return {
         'isOutgoing': False,
