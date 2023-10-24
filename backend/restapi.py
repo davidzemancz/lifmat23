@@ -65,7 +65,17 @@ def post_message():
 
     answer = {
         'text': 'posli nudes',
-        'isOutgoing': False
+        'isOutgoing': False,
+        'refs':[
+            {
+                'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0094156',
+                'info': "kapitoly 4,5"
+            },
+             {
+                'url': 'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/0255111',
+                'info': "kapitoly 6"
+            }
+        ]
      } # ask(message['text'])
     messages.append(answer)
 
