@@ -5,16 +5,32 @@ CORS(app)
 
 messages = []
 
+def create_query(message):
+    return ''
+
+def get_pdfs(query):
+    return []
+
+def get_chapters(message, pdfs):
+    return []
+
+def ask(message, pdfs, chapters):
+    return ''
+
 def get_answer(message):
     # Vygenerovat query do DN pro vraceni PDF
     # Nacist prislusna PDF ze souboru
     # Musim z PDF vybrat, ktery odstavec me zajima
     # Zeptam se na dotaz v kontextu prislusnych kapitol
     # Vratim odpoved
-
+    query = create_query(message)
+    pdfs = get_pdfs(query)
+    chaps = get_chapters(pdfs)
+    answer = ask(message, pdfs, chaps)
+    
     return {
         'isOutgoing': False,
-        'text': 'nema slov'
+        'text': answer
     }
 
 @app.route('/delete-messages')
