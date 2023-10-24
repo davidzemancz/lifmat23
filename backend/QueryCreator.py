@@ -1,5 +1,5 @@
 import openai
-openai.api_key = "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"
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def create_query():
 
