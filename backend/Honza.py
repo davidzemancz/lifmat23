@@ -8,8 +8,8 @@ def get_answer(message, pdfs, chapters, context):
     for c in chapters:
         text += PDFreader.read_chapter(c,pdfs)
 
-    if len(context) == 0:
-        context = ['','']
+    if len(cont) == 0:
+        cont = ['','']
     response = openai.ChatCompletion.create(
     model="gpt-4",
     messages=[
