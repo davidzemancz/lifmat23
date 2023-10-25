@@ -148,7 +148,7 @@ def get_drugs_req():
     rows = cur.fetchall()
 
     return {
-        'rows': [{'KOD_SUKL':row[0], 'NAZEV': row[2]} for row in rows]
+        'rows': [{'KOD_SUKL':row[0], 'NAZEV': row[2], 'SILA': row[3], 'BALENI': row[5], 'VERZE': 1} for row in rows]
     }
 
 @app.route('/post-message', methods=['POST'])
