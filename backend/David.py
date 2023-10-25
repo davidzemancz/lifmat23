@@ -10,34 +10,37 @@ def create_query(message):
         messages=[
             {
                 "role": "user", 
-                "content": "Mám SQL VIEW 'leky' a v něm sloupce KOD_SUKL, NAZEV, SPC."
+                "content": "Write me just a drug name from following prompt without quotes. If there is no drug name, write text NOTHING"
             },
              {
                 "role": "user", 
-                "content": f'Vytvoř query pro vrácení sloupců NAZEV, KOD_SUKL a SPC podle sloupce NAZEV.'
+                "content": f'{message}'
             },
-            {
-                "role": "user", 
-                "content": f'Použij operátor LIKE s "%" i mezi slovy a UPPER.'
-            },
-            {
-                "role": "user", 
-                "content": f'Dotaz zní takto: {message}'
-            },
-             {
-                "role": "user", 
-                "content": f'Pokud dotaz neobsahuje název léku, vrať query, která nevrátí žádná data.'
-            },
-            {
-                "role": "user", 
-                "content": "Vypiš pouze SQL query jako prostý text, ne jako kód, a nic dalšího."
-            }
+            # {
+            #     "role": "user", 
+            #     "content": f'Použij klíčové slovo LIKE. Vlož "%" mezi všechna slova. Dále použij UPPER.'
+            # },
+            # {
+            #     "role": "user", 
+            #     "content": f'Dotaz zní takto: {message}'
+            # },
+            #  {
+            #     "role": "user", 
+            #     "content": f'Pokud dotaz neobsahuje název léku, vrať query, která nevrátí žádná data.'
+            # },
+            # {
+            #     "role": "user", 
+            #     "content": "Vypiš pouze SQL query jako prostý text, ne jako kód, a nic dalšího."
+            # }
     ])
-    return completion.choices[0].message.content
+    drug_name =  completion.choices[0].message.content
+
+    return f'SELECT NAZEV, KOD_SUKL, SPC FROM leky WHERE UPPER(NAZEV) LIKE "%{"%".join(drug_name.upper().split(" "))}%"'
 
 def get_drugs(query):
     con = sqlite3.connect("data.db") 
     cur = con.cursor()
+    print(query)
     cur.execute(query)
     rows = cur.fetchall()
     pdfs = {}
