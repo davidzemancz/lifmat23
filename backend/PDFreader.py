@@ -53,6 +53,3 @@ kapitoly = [
     "10.DATUMREVIZETEXTU"
 ]
 
-pdf = "SPC198710.pdf"
-print(read_chapter(4,[pdf]))
-
