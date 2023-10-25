@@ -9,7 +9,9 @@ def get_chapters(message):
         if len(char) > 2:
             return [3,4]
 
-     
+    if '3' not in l and "indikace" in message:
+        l += [3] 
+
     if '10' not in l and "nezadouci ucinky" in message:
         l += [10]
     if '10' not in l and "nežádoucí" in message:

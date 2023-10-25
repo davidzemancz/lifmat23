@@ -3,3 +3,7 @@ video:
 2) Porovnani 2 leku na dotaz
 3) Vygenerovani QR kodu pro dany lek 
 4) Odpoved na jejich dotaz
+
+
+
+"Zolpidem mylan 10mg kontraindikace?" 
