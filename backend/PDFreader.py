@@ -1,7 +1,6 @@
 from pypdf import PdfReader
 
 def read_chapter(chap_num, pdf_names):
-    #print(pdf_names)
     if len(pdf_names) > 2:
          return "Prosim o specifikaci"
     if chap_num < 0 or chap_num > 19:
@@ -13,13 +12,12 @@ def read_chapter(chap_num, pdf_names):
         reader = PdfReader(pdf_path)
         number_of_pages = len(reader.pages)
         read = False
-        text = "p\n"
+        text = f'Informace o {p}\n'
         for p in range(number_of_pages):
             text += reader.pages[p].extract_text()  
 
         for i in text.splitlines():
             line = i.strip()
-            #print(line.replace(" ", ""))
             if kapitoly[chap_num] in line.replace(" ", "").replace(".",""):
                 read = True
             if len(kapitoly) > chap_num + 1 and kapitoly[chap_num + 1] in line.replace(" ", "").replace(".","") and read == True:
@@ -27,7 +25,6 @@ def read_chapter(chap_num, pdf_names):
             if read:
                 if line != "":
                     chap_content += line + "\n"
-    #print(chap_content)
     return chap_content
 
 kapitoly = [
