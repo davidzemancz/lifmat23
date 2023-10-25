@@ -28,6 +28,7 @@ def vrat_context():
         if 'chaps' in messages[-2]:
             return [x for x in messages[-3:-1]]
         return []
+    return []
 
 
 def ask(message):
