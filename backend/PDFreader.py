@@ -1,7 +1,5 @@
 from pypdf import PdfReader
 
-
-
 def read_chapter(chap_num, pdf_names):
     #print(pdf_names)
     if len(pdf_names) > 2:
@@ -13,7 +11,7 @@ def read_chapter(chap_num, pdf_names):
         reader = PdfReader(pdf_path)
         number_of_pages = len(reader.pages)
         read = False
-        text = ""
+        text = "p\n"
         for p in range(number_of_pages):
             text += reader.pages[p].extract_text()  
 

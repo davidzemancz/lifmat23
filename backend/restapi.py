@@ -52,7 +52,7 @@ def ask(message):
         context = vrat_context()
         drugs = [('0209947',)] # Docasna oprava
         if len(context) > 0:
-            chaps = context[1]['chaps']
+            chaps = list(dict.fromkeys(get_chapters(message) + context[1]['chaps']))
             pdfs_list = context[1]['pdf_list']
             answer = get_answer(message, pdfs_list, chaps, context)
 
