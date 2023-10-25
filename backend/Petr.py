@@ -22,6 +22,8 @@ def get_chapters(message):
 
     if '11' not in l and "predavkovani" in message:
         l += [11]
+    if '10' not in l:
+         l += [10]
 
     return list(map(int,l))
 
