@@ -4,6 +4,8 @@ def read_chapter(chap_num, pdf_names):
     #print(pdf_names)
     if len(pdf_names) > 2:
          return "Prosim o specifikaci"
+    if chap_num < 0 or chap_num > 19:
+         return ""
     
     chap_content = ""
     for p in pdf_names:

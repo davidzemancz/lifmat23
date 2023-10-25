@@ -4,7 +4,12 @@ import openai
 def get_chapters(message):
     kapitoly_str = ",".join(kapitoly)
     res = respondPetr(message,kapitoly_str)
-    return list(map(int,res.split(",")))
+    l = res.split(",")
+    for char in l:
+        if len(char) > 2:
+            return [3,4]
+
+    return list(map(int,l))
 
 def response(question, kapitoly):
     return  openai.ChatCompletion.create(
