@@ -4,6 +4,7 @@ import David
 import Honza
 import Petr
 import time
+import sqlite3
 
 app = Flask(__name__)
 CORS(app)
@@ -132,6 +133,22 @@ def get_messages():
 
     return {
         'messages': messages
+    }
+
+@app.route('/drugs')
+def get_drugs():
+    global messages
+
+    args = request.args
+    search = args.get('search')
+
+    con = sqlite3.connect("data.db") 
+    cur = con.cursor()
+    cur.execute(f'SELECT * FROM dlp_lecivepripravky WHERE NAZEV LIKE "%{search}%" OR KOD_SUKL LIKE "%{search}%"') #  WHERE NAZEV LIKE "%{search}%"
+    rows = cur.fetchall()
+
+    return {
+        'rows': [{'KOD_SUKL':row[0], 'NAZEV': row[2]} for row in rows]
     }
 
 @app.route('/post-message', methods=['POST'])
