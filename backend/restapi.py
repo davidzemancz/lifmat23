@@ -45,13 +45,14 @@ def ask(message):
         return {
             'isOutgoing': False,
             'text': 'Vyberte prosím lék, který vás zajímá.',
-            'options':[{'name': drug[2], 'file': drug[1] } for drug in drugs],
+            'options':[{'name': drug[2], 'file': drug[1], 'code':drug[0] } for drug in drugs],
             'pastId':len(messages) - 1
         }
     elif len(drugs) == 0:  
         context = vrat_context()
-        drugs = [('0209947',)] # Docasna oprava
+        
         if len(context) > 0:
+            drugs = context[1]['drugs']
             chaps = list(dict.fromkeys(get_chapters(message) + context[1]['chaps']))
             pdfs_list = context[1]['pdf_list']
             answer = get_answer(message, pdfs_list, chaps, context)
@@ -81,6 +82,7 @@ def ask(message):
                 'text': answer,
                 'refs': [{ 'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{drug[0]}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'} for drug in drugs],
                 'chaps': chaps,
+                'drugs': drugs,
                 'pdf_list': pdfs_list
             }
         else:
@@ -89,7 +91,7 @@ def ask(message):
                 'text': "K vašemu dotazu nebyly nalezeny žádné informace."
             }
 
-def ask_detailed(file, pastId):
+def ask_detailed(file, code, pastId):
     prev_message = messages[pastId]
     
     chaps = get_chapters(prev_message['text'])
@@ -99,8 +101,9 @@ def ask_detailed(file, pastId):
         return {
             'isOutgoing': False,
             'text': answer_text,
-            'refs': [ {'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{file}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'}],
+            'refs': [ {'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{code}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'}],
             'chaps': chaps,
+            'drugs': [(code,)],
             'pdf_list': pdfs_list
         }
     else:
@@ -146,9 +149,10 @@ def post_message():
 
     if 'file' in message:
         file = message['file']
+        code = message['code']
         pastId = int(message['pastId'])
         print(file, pastId)
-        answer = ask_detailed(file, pastId)
+        answer = ask_detailed(file, code, pastId)
         messages.append(answer)
 
     else:

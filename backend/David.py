@@ -10,7 +10,7 @@ def create_query(message):
         messages=[
             {
                 "role": "user", 
-                "content": "Write me just a drug name from following prompt without quotes. If there is no drug name, write text NOTHING"
+                "content": "Write me just a drug names from following prompt without quotes separated by comma. If there is no drug names, write text NOTHING"
             },
              {
                 "role": "user", 
@@ -33,9 +33,9 @@ def create_query(message):
             #     "content": "Vypiš pouze SQL query jako prostý text, ne jako kód, a nic dalšího."
             # }
     ])
-    drug_name =  completion.choices[0].message.content
+    drug_names =  completion.choices[0].message.content
 
-    return f'SELECT NAZEV, KOD_SUKL, SPC FROM leky WHERE UPPER(NAZEV) LIKE "%{"%".join(drug_name.upper().split(" "))}%"'
+    return 'SELECT NAZEV, KOD_SUKL, SPC FROM leky WHERE ' + " OR ".join(["UPPER(NAZEV) LIKE '%" + drug_name.upper().replace(" ", "%") + "%'" for drug_name in drug_names.split(",")])
 
 def get_drugs(query):
     con = sqlite3.connect("data.db") 
