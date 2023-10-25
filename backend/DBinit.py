@@ -68,7 +68,7 @@ def create_leky():
     con.commit()
 
     for lek in ['PARALEN','IBUPROFEN','ASPIRIN']:
-        nemoc = 'horečka'
+        nemoc = 'horecka'
         query = f'UPDATE {table_name} SET NEMOC = "{nemoc}" WHERE UPPER(NAZEV) LIKE "%{lek}%"'
         cur.execute(query)
         con.commit()

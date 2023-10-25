@@ -33,9 +33,30 @@ def create_query(message):
             #     "content": "Vypiš pouze SQL query jako prostý text, ne jako kód, a nic dalšího."
             # }
     ])
-    drug_names =  completion.choices[0].message.content
+    result = completion.choices[0].message.content
+    
+    
+    if result != 'NOTHING':
+        return 'SELECT NAZEV, KOD_SUKL, SPC FROM leky WHERE ' + " OR ".join(["UPPER(NAZEV) LIKE '%" + drug_name.upper().replace(" ", "%") + "%'" for drug_name in result.split(",")])
+    else:
+        completion = openai.ChatCompletion.create(
+        model="gpt-4", 
+        messages=[
+             {
+                "role": "user", 
+                "content": "Vrať všechny nemocné stavy člověka z následujícího dotazu bez diakritiky. Pokud tam žádné nejsou, vrať text NIC." 
+            },
+             {
+                "role": "user", 
+                "content": f'{message}'
+            },
+        ])
+        # print(completion)
+        result = completion.choices[0].message.content
 
-    return 'SELECT NAZEV, KOD_SUKL, SPC FROM leky WHERE ' + " OR ".join(["UPPER(NAZEV) LIKE '%" + drug_name.upper().replace(" ", "%") + "%'" for drug_name in drug_names.split(",")])
+        return 'SELECT NAZEV, KOD_SUKL, SPC FROM leky WHERE ' + " OR ".join(["UPPER(NEMOC) LIKE '%" + drug_name.upper().replace(" ", "%") + "%'" for drug_name in result.split(",")])
+            
+
 
 def get_drugs(query):
     con = sqlite3.connect("data.db") 
@@ -50,7 +71,8 @@ def get_drugs(query):
     return [(pdfs[pdf][1], pdf, pdfs[pdf][0]) for pdf in pdfs]
 
 def test():
-    question = 'Na jaké indikace je určen MAGNEROT 500MG?'
+    # question = 'Na jaké indikace je určen MAGNEROT 500MG?'
+    question = 'Jaké léky jsou na horečku?'
     # question = 'Je pro člověka s horečkou lepší paralen rapid 500mg nebo warfarin pmcs 2mg?'
     # question = 'Jaká je doporučená dávka léku paralen grip 25mg?'
     # question = 'Lze použít lék omeprazol při diabetes?'
@@ -58,9 +80,9 @@ def test():
 
     query = create_query(question)
     print(query)
-    pdfs = get_drugs(query)
-    print(pdfs)
-    print(query)
-    print(len(pdfs))
+    # pdfs = get_drugs(query)
+    # print(pdfs)
+    # print(query)
+    # print(len(pdfs))
 
 # test()

@@ -37,7 +37,7 @@ def ask(message):
     drugs = get_drugs(query)
     #print(drugs)
     #print(query)
-    if len(drugs) > 10:
+    if len(drugs) > 100:
         return {
             'isOutgoing': False,
             'text': "Upřesněte prosím váš dotaz nebo specifikujte přesné jméno léku."
@@ -136,7 +136,7 @@ def get_messages():
     }
 
 @app.route('/drugs')
-def get_drugs():
+def get_drugs_req():
     global messages
 
     args = request.args
