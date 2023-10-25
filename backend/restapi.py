@@ -61,6 +61,7 @@ def ask(message):
                 'isOutgoing': False,
                 'text': answer,
                 'refs': [{ 'url': f'https://prehledy.sukl.cz/prehled_leciv.html#/detail-reg/{drug[0]}', 'info': f'kapitoly {",".join([str(c) for c in chaps])}'} for drug in drugs],
+                'drugs': drugs,
                 'chaps': chaps,
                 'pdf_list': pdfs_list
             }
