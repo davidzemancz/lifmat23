@@ -20,9 +20,9 @@ def read_chapter(chap_num, pdf_names):
         for i in text.splitlines():
             line = i.strip()
             #print(line.replace(" ", ""))
-            if kapitoly[chap_num] in line.replace(" ", ""):
+            if kapitoly[chap_num] in line.replace(" ", "").replace(".",""):
                 read = True
-            if len(kapitoly) > chap_num + 1 and kapitoly[chap_num + 1] in line.replace(" ", "") and read == True:
+            if len(kapitoly) > chap_num + 1 and kapitoly[chap_num + 1] in line.replace(" ", "").replace(".","") and read == True:
                     read = False
             if read:
                 if line != "":
@@ -31,25 +31,25 @@ def read_chapter(chap_num, pdf_names):
     return chap_content
 
 kapitoly = [
-    "1.NÁZEVPŘÍPRAVKU",                                                             #0
-    "2.KVALITATIVNÍAKVANTITATIVNÍSLOŽENÍ",                                          #1
-    "3.LÉKOVÁFORMA",                                                                #2                                         
-    "4.1.Terapeutickéindikace",
-    "4.2.Dávkováníazpůsobpodání",
-    "4.3.Kontraindikace",
-    "4.4.Zvláštníupozorněníaopatřenípropoužití",
-    "4.5.Interakcesjinýmiléčivýmipřípravkyajinéformyinterakce",
-    "4.6.Fertilita,těhotenstvíakojení",
-    "4.7.Účinkynaschopnostříditaobsluhovatstroje",
-    "4.8.Nežádoucíúčinky",
-    "4.9.Předávkování",
-    "5.1.Farmakodynamickévlastnosti",
-    "5.2.Farmakokinetickévlastnosti",
-    "5.3.Předklinickéúdajevztahujícísekbezpečnosti",
-    "6.FARMACEUTICKÉÚDAJE",
-    "7.DRŽITELROZHODNUTÍOREGISTRACI",
-    "8.REGISTRAČNÍČÍSLO(A)",
-    "9.DATUMPRVNÍREGISTRACE/PRODLOUŽENÍREGISTRACE",
-    "10.DATUMREVIZETEXTU"
+    "1NÁZEVPŘÍPRAVKU",                                                             #0
+    "2KVALITATIVNÍAKVANTITATIVNÍSLOŽENÍ",                                          #1
+    "3LÉKOVÁFORMA",                                                                #2                                         
+    "41Terapeutickéindikace",
+    "42Dávkováníazpůsobpodání",
+    "43Kontraindikace",
+    "44Zvláštníupozorněníaopatřenípropoužití",
+    "45Interakcesjinýmiléčivýmipřípravkyajinéformyinterakce",
+    "46Fertilita,těhotenstvíakojení",
+    "47Účinkynaschopnostříditaobsluhovatstroje",
+    "48Nežádoucíúčinky",
+    "49Předávkování",
+    "51Farmakodynamickévlastnosti",
+    "52Farmakokinetickévlastnosti",
+    "53Předklinickéúdajevztahujícísekbezpečnosti",
+    "6FARMACEUTICKÉÚDAJE",
+    "7DRŽITELROZHODNUTÍOREGISTRACI",
+    "8REGISTRAČNÍČÍSLO(A)",
+    "9DATUMPRVNÍREGISTRACE/PRODLOUŽENÍREGISTRACE",
+    "10DATUMREVIZETEXTU"
 ]
 
