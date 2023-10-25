@@ -8,12 +8,18 @@ def get_answer(message, pdfs, chapters, context):
     for c in chapters:
         text += PDFreader.read_chapter(c,pdfs)
 
+    if len(context) == 0:
+        context = ['','']
     response = openai.ChatCompletion.create(
     model="gpt-4",
     messages=[
         {
-          "role": "system", 
-          "content": "Máš k dispozici následující kontext." + ",".join(cont)
+          "role": "user", 
+          "content": f'Na dotaz {cont[0]}'
+        },
+        {
+          "role": "assistant", 
+          "content": f'Odpoved {cont[1]}'
         },
         {
           "role": "user",
