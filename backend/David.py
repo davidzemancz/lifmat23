@@ -24,6 +24,10 @@ def create_query(message):
                 "role": "user", 
                 "content": f'Dotaz zní takto: {message}'
             },
+             {
+                "role": "user", 
+                "content": f'Pokud dotaz neobsahuje název léku, vrať query, která nevrátí žádná data.'
+            },
             {
                 "role": "user", 
                 "content": "Vypiš pouze SQL query jako prostý text, ne jako kód, a nic dalšího."

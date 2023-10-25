@@ -95,7 +95,7 @@ def ask_detailed(file, pastId):
     chaps = get_chapters(prev_message['text'])
     if len(chaps) > 0:
         pdfs_list = [file]
-        answer_text = get_answer(prev_message['text'], pdfs_list, chaps)
+        answer_text = get_answer(prev_message['text'], pdfs_list, chaps, [])
         return {
             'isOutgoing': False,
             'text': answer_text,
@@ -137,7 +137,7 @@ def post_message():
     message = request.json
     messages.append(message)
 
-    debug = True
+    debug = False
     if debug:
         time.sleep(3)
         answer = get_mock_answer()
