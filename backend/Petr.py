@@ -9,6 +9,18 @@ def get_chapters(message):
         if len(char) > 2:
             return [3,4]
 
+     
+    if '10' not in l and "nezadouci ucinky" in message:
+        l += [10]
+    if '10' not in l and "nežádoucí" in message:
+        l += [10]
+
+    if '5' not in l and "kontraindikace" in message:
+        l += [5]
+
+    if '11' not in l and "predavkovani" in message:
+        l += [11]
+
     return list(map(int,l))
 
 def response(question, kapitoly):

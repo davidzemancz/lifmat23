@@ -8,7 +8,8 @@ def get_answer(message, pdfs, chapters, context):
     for c in chapters:
         text += PDFreader.read_chapter(c,pdfs)
 
-    print(text)
+    print(chapters)
+    
 
     if len(cont) == 0:
         cont = ['','']
