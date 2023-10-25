@@ -49,13 +49,35 @@ def create_leky():
     con = sqlite3.connect("data.db") 
     # Global table
     cur = con.cursor()
-    table_name = 'leky'
-    print(table_name)
-    cur.execute(f'DROP VIEW IF EXISTS {table_name}')
-    query = f'CREATE VIEW {table_name} AS SELECT lp.KOD_SUKL, (lp.NAZEV || " " || lp.SILA) AS NAZEV, nd.SPC FROM dlp_lecivepripravky lp, dlp_nazvydokumentu nd WHERE lp.KOD_SUKL = nd.KOD_SUKL;'
+
+    view_name = 'leky_view'
+    cur.execute(f'DROP VIEW IF EXISTS {view_name}')
+    query = f'CREATE VIEW {view_name} AS SELECT lp.KOD_SUKL, (lp.NAZEV || " " || lp.SILA) AS NAZEV, nd.SPC FROM dlp_lecivepripravky lp, dlp_nazvydokumentu nd WHERE lp.KOD_SUKL = nd.KOD_SUKL;'
     cur.execute(query)
     con.commit()
 
+    table_name = 'leky'
+    print(table_name)
+    cur.execute(f'DROP TABLE IF EXISTS {table_name}')
+    query = f'CREATE TABLE {table_name} AS SELECT * FROM {view_name}'
+    cur.execute(query)
+    con.commit()
+
+    query = f'ALTER TABLE {table_name} ADD NEMOC VARCHAR;'
+    cur.execute(query)
+    con.commit()
+
+    for lek in ['PARALEN','IBUPROFEN','ASPIRIN']:
+        nemoc = 'horečka'
+        query = f'UPDATE {table_name} SET NEMOC = "{nemoc}" WHERE UPPER(NAZEV) LIKE "%{lek}%"'
+        cur.execute(query)
+        con.commit()
+
+    # query = f'SELECT NAZEV, COUNT(NAZEV) AS CNT FROM dlp_lecivepripravky GROUP BY NAZEV ORDER BY CNT DESC LIMIT 20'
+    # cur.execute(query)
+    # rows = cur.fetchall()
+    # for row in rows:
+    #     print(row)
 # create_db()
 create_leky()
 
