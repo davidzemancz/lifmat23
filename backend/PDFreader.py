@@ -19,7 +19,7 @@ def read_chapter(chap_num, pdf_names):
 
         for i in text.splitlines():
             line = i.strip()
-            print(line.replace(" ", ""))
+            #print(line.replace(" ", ""))
             if kapitoly[chap_num] in line.replace(" ", ""):
                 read = True
             if len(kapitoly) > chap_num + 1 and kapitoly[chap_num + 1] in line.replace(" ", "") and read == True:
