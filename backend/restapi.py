@@ -33,6 +33,8 @@ def vrat_context():
 def ask(message):
     query = create_query(message)
     drugs = get_drugs(query)
+    print(drugs)
+    print(query)
     if len(drugs) > 10:
         return {
             'isOutgoing': False,
@@ -47,6 +49,7 @@ def ask(message):
         }
     elif len(drugs) == 0:  
         context = vrat_context()
+        drugs = [('0209947',)] # Docasna oprava
         if len(context) > 0:
             chaps = context[1]['chaps']
             pdfs_list = context[1]['pdf_list']
@@ -132,6 +135,13 @@ def post_message():
     
     message = request.json
     messages.append(message)
+
+    debug = True
+    if debug:
+        time.sleep(3)
+        answer = get_mock_answer()
+        messages.append(answer)
+        return {}
 
     if 'file' in message:
         file = message['file']
